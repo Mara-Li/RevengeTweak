@@ -182,7 +182,6 @@ jobs:
           unzip -q ${{ env.APP_NAME }}.ipa
           DISCORD_VERSION=$(plutil -p Payload/Discord.app/Info.plist | grep CFBundleShortVersionString | cut -d '"' -f 4)
           echo "DISCORD_VERSION=$DISCORD_VERSION" >> $GITHUB_ENV
-          unzip -q ${{ env.APP_NAME }}-discordnotrack.ipa
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
