@@ -130,10 +130,6 @@ jobs:
         run: |
           cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i discord.ipa -o ${{ github.workspace }}/${{ env.APP_NAME }}.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} -usg
 
-      - name: Inject tweak - arm64 slice Revenge
-        run: |
-          cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i discord.ipa -o ${{ github.workspace }}/${{ env.APP_NAME }}-thin.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} -usgq
-
       - name: Download DiscordNoTrack
         run: wget https://github.com/asdfzxcvbn/DiscordNoTrack/releases/latest/download/DiscordNoTrack.dylib
 
@@ -146,12 +142,6 @@ jobs:
         with:
           name: ipa
           path: ${{ github.workspace }}/${{ env.APP_NAME }}.ipa
-
-      - name: Upload ipa-thin as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ipa-thin
-          path: ${{ github.workspace }}/${{ env.APP_NAME }}-thin.ipa
 
       - name: Upload ipa-discordnotrack as artifact
         uses: actions/upload-artifact@v4
