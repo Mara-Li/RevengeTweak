@@ -137,7 +137,7 @@ jobs:
 
       - name: Inject tweak - Revenge + DiscordNoTrack
         run: |
-          cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i discord.ipa -o ${{ github.workspace }}/${{ env.APP_NAME }}-discordnotrack.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} ${{ github.workspace }}/DiscordNoTrack.dylib -usgq
+          cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i discord.ipa -o ${{ github.workspace }}/${{ env.APP_NAME }}-discordnotrack.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} ${{ github.workspace }}/DiscordNoTrack.dylib -usg
 
       - name: Upload ipa as artifact
         uses: actions/upload-artifact@v4
