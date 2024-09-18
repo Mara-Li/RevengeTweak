@@ -146,3 +146,15 @@ jobs:
         with:
           name: ipa
           path: ${{ github.workspace }}/${{ env.APP_NAME }}.ipa
+
+      - name: Upload ipa-thin as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ipa-thin
+          path: ${{ github.workspace }}/${{ env.APP_NAME }}-thin.ipa
+
+      - name: Upload ipa-discordnotrack as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ipa-discordnotrack
+          path: ${{ github.workspace }}/${{ env.APP_NAME }}-discordnotrack.ipa
