@@ -233,7 +233,6 @@ jobs:
 
       - name: Update notrack-repo.json
         run: |
-          unzip -q -o ${{ env.APP_NAME }}-discordnotrack.ipa
           VERSION=$(plutil -p Payload/Discord.app/Info.plist | grep CFBundleShortVersionString | cut -d '"' -f 4)
           DATE=$(date -u +"%Y-%m-%d")
           IPA_SIZE=$(ls -l ${{ env.APP_NAME }}-discordnotrack.ipa | awk '{print $5}')
