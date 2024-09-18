@@ -132,8 +132,8 @@ jobs:
         run: |
           cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i discord.ipa -o ${{ github.workspace }}/${{ env.APP_NAME }}.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} -uws
 
-            - name: Download DiscordNoTrack
-              run: wget https://github.com/asdfzxcvbn/DiscordNoTrack/releases/latest/download/DiscordNoTrack.dylib
+      - name: Download DiscordNoTrack
+        run: wget https://github.com/asdfzxcvbn/DiscordNoTrack/releases/latest/download/DiscordNoTrack.dylib
 
       - name: Inject tweak - Revenge + DiscordNoTrack
         run: |
