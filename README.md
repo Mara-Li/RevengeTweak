@@ -1,8 +1,7 @@
 # Notice
 This branch will be used for my custom builds of revenge, they include:
 - Normal Revenge ipa updated to latest discord version
-- Revenge arm64 slice only, for more info about that check [here!](https://github.com/asdfzxcvbn/pyzule-rw/wiki/recommended-flags)
-- Revenge arm64 slice only + [DiscordNoTrack](https://github.com/asdfzxcvbn/DiscordNoTrack)
+- Revenge + [DiscordNoTrack](https://github.com/asdfzxcvbn/DiscordNoTrack)
 
 # RevengeTweak
 
