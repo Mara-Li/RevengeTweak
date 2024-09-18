@@ -130,7 +130,7 @@ jobs:
 
       - name: Inject tweak - Normal Revenge
         run: |
-          cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i discord.ipa -o ${{ github.workspace }}/${{ env.APP_NAME }}.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} -uws
+          cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i discord.ipa -o ${{ github.workspace }}/${{ env.APP_NAME }}.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} -usg
 
       - name: Download DiscordNoTrack
         run: wget https://github.com/asdfzxcvbn/DiscordNoTrack/releases/latest/download/DiscordNoTrack.dylib
@@ -198,7 +198,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  app-repo:
+  repos:
     continue-on-error: true
     runs-on: macos-14
     needs: release-app
@@ -230,16 +230,19 @@ jobs:
           DOWNLOAD_URL=https://github.com/${{ github.repository }}/releases/download/v$VERSION/${{ env.APP_NAME }}.ipa
           NEW_ENTRY=$(jq -n --arg version "$VERSION" --arg date "$DATE" --arg size "$IPA_SIZE" --arg downloadURL "$DOWNLOAD_URL" '{version: $version, date: $date, size: ($size | tonumber), downloadURL: $downloadURL}')
           jq --argjson newEntry "$NEW_ENTRY" '.apps[0].versions |= [$newEntry] + .' app-repo.json > temp.json && mv temp.json app-repo.json
+
+      - name: Update notrack-repo.json
+        run: |
           unzip -q ${{ env.APP_NAME }}-discordnotrack.ipa
           VERSION=$(plutil -p Payload/Discord.app/Info.plist | grep CFBundleShortVersionString | cut -d '"' -f 4)
           DATE=$(date -u +"%Y-%m-%d")
           IPA_SIZE=$(ls -l ${{ env.APP_NAME }}-discordnotrack.ipa | awk '{print $5}')
           DOWNLOAD_URL=https://github.com/${{ github.repository }}/releases/download/v$VERSION/${{ env.APP_NAME }}-discordnotrack.ipa
           NEW_ENTRY=$(jq -n --arg version "$VERSION" --arg date "$DATE" --arg size "$IPA_SIZE" --arg downloadURL "$DOWNLOAD_URL" '{version: $version, date: $date, size: ($size | tonumber), downloadURL: $downloadURL}')
-          jq --argjson newEntry "$NEW_ENTRY" '.apps[0].versions |= [$newEntry] + .' app-repo.json > temp.json && mv temp.json app-repo.json
+          jq --argjson newEntry "$NEW_ENTRY" '.apps[0].versions |= [$newEntry] + .' notrack-repo.json > temp.json && mv temp.json notrack-repo.json
 
       - uses: EndBug/add-and-commit@v9
         with:
           default_author: github_actions
-          message: "chore: update app-repo.json"
-          add: app-repo.json
+          message: "chore: update repos"
+          add: app-repo.json, notrack-repo.json
