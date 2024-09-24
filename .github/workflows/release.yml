@@ -188,8 +188,6 @@ jobs:
         with:
           tag_name: v${{ env.DISCORD_VERSION }}
           files: |
-            ${{ env.DEB_FILE_NAME }}
-            ${{ env.ROOTLESS_DEB_FILE_NAME }}
             ${{ env.APP_NAME }}.ipa
             ${{ env.APP_NAME }}-discordnotrack.ipa
           generate_release_notes: true
