@@ -13,6 +13,12 @@
       "tintColor": "7289da",
       "versions": [
         {
+          "version": "249.0",
+          "date": "2024-10-02",
+          "size": 94736052,
+          "downloadURL": "https://github.com/Cristiandis/RevengeTweak/releases/download/v249.0/Revenge.ipa"
+        },
+        {
           "version": "248.0",
           "date": "2024-09-24",
           "size": 95010245,
