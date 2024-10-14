@@ -13,6 +13,12 @@
       "tintColor": "7289da",
       "versions": [
         {
+          "version": "250.0",
+          "date": "2024-10-14",
+          "size": 94741423,
+          "downloadURL": "https://github.com/Cristiandis/RevengeTweak/releases/download/v250.0/Revenge-discordnotrack.ipa"
+        },
+        {
           "version": "249.0",
           "date": "2024-10-02",
           "size": 94741527,
