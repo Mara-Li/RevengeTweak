@@ -108,18 +108,16 @@ jobs:
       - name: Download Discord IPA
         run: |
           curl -L -o discord.ipa ${{ github.event.inputs.ipa_url }}
+          
+      - name: Download OpenInDiscord
+        run: |
+          wget https://raw.githubusercontent.com/daisuke1227/RevengeUpdates/refs/heads/main/OpenDiscordSafariExtension.zip
+          unzip -q OpenDiscordSafariExtension.zip
 
       - name: Add OpenInDiscord
         run: |
           unzip -q discord.ipa
-          wget https://raw.githubusercontent.com/daisuke1227/RevengeUpdates/refs/heads/main/OpenDiscordSafariExtension.zip
-          unzip -q OpenDiscordSafariExtension.zip
           cp -r OpenDiscordSafariExtension.appex Payload/Discord.app/Plugins/
-      - name: Package Discord IPA
-        uses: vimtor/action-zip@v1.2
-        with:
-            files: Payload/
-            dest: discord-opensafari.ipa
           
       - name: Download IPA icons
         run: |
@@ -142,14 +140,14 @@ jobs:
 
       - name: Inject tweak - Normal Revenge
         run: |
-          cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i discord-opensafari.ipa -o ${{ github.workspace }}/${{ env.APP_NAME }}.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} -usg
+          cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i Payload/ -o ${{ github.workspace }}/${{ env.APP_NAME }}.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} -usg
 
       - name: Download DiscordNoTrack
         run: wget https://github.com/asdfzxcvbn/DiscordNoTrack/releases/latest/download/DiscordNoTrack.dylib
 
       - name: Inject tweak - Revenge + DiscordNoTrack
         run: |
-          cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i discord-opensafari.ipa -o ${{ github.workspace }}/${{ env.APP_NAME }}-discordnotrack.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} ${{ github.workspace }}/DiscordNoTrack.dylib -usg
+          cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i Payload/ -o ${{ github.workspace }}/${{ env.APP_NAME }}-discordnotrack.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} ${{ github.workspace }}/DiscordNoTrack.dylib -usg
 
       - name: Upload ipa as artifact
         uses: actions/upload-artifact@v4
