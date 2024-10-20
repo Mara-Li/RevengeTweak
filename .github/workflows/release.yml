@@ -140,14 +140,14 @@ jobs:
 
       - name: Inject tweak - Normal Revenge
         run: |
-          cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i Payload/ -o ${{ github.workspace }}/${{ env.APP_NAME }}.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} -usg
+          cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i Payload/Discord.app -o ${{ github.workspace }}/${{ env.APP_NAME }}.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} -usg
 
       - name: Download DiscordNoTrack
         run: wget https://github.com/asdfzxcvbn/DiscordNoTrack/releases/latest/download/DiscordNoTrack.dylib
 
       - name: Inject tweak - Revenge + DiscordNoTrack
         run: |
-          cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i Payload/ -o ${{ github.workspace }}/${{ env.APP_NAME }}-discordnotrack.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} ${{ github.workspace }}/DiscordNoTrack.dylib -usg
+          cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i Payload/Discord.app -o ${{ github.workspace }}/${{ env.APP_NAME }}-discordnotrack.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} ${{ github.workspace }}/DiscordNoTrack.dylib -usg
 
       - name: Upload ipa as artifact
         uses: actions/upload-artifact@v4
