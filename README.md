@@ -43,7 +43,7 @@ Tweak to inject [Revenge](https://github.com/revenge-mod/Revenge) into Discord. 
 # Notice
 This branch will be used for my custom builds of revenge, they include:
 - Normal Revenge ipa updated to latest discord version
-- Revenge + [DiscordNoTrack](https://github.com/asdfzxcvbn/DiscordNoTrack)
+- Revenge + [DiscordNoTrack](https://github.com/asdfzxcvbn/DiscordNoTrack) + [OpenDiscordSafariExtension](https://github.com/BillyCurtis/OpenDiscordSafariExtension)
 
 > [!NOTE]
 > As of right now this tweak does not encompass some functionalities when running in a jailed environment with a wildcard certificate \
