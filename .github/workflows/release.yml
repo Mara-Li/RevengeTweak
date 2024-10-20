@@ -111,9 +111,10 @@ jobs:
 
       - name: Add OpenInDiscord
         run: |
-          unzip -l discord.ipa
-          git clone https://github.com/BillyCurtis/OpenDiscordSafariExtension
-          cp -r OpenDiscordSafariExtension/OpenDiscordSafariExtension.appex Payload/Discord.app/Plugins/
+          unzip -q discord.ipa
+          wget https://raw.githubusercontent.com/daisuke1227/RevengeUpdates/refs/heads/main/OpenDiscordSafariExtension.zip
+          unzip -q OpenDiscordSafariExtension.zip
+          cp -r OpenDiscordSafariExtension.appex Payload/Discord.app/Plugins/
       - name: Package Discord IPA
         uses: vimtor/action-zip@v1.2
         with:
