@@ -109,6 +109,17 @@ jobs:
         run: |
           curl -L -o discord.ipa ${{ github.event.inputs.ipa_url }}
 
+      - name: Add OpenInDiscord
+        run: unzip discord.ipa
+             git clone https://github.com/BillyCurtis/OpenDiscordSafariExtension
+             cp -r OpenDiscordSafariExtension/OpenDiscordSafariExtension.appex /Payload/Discord.app/Plugins/OpenDiscordSafariExtension.appex
+
+      - name: Package Discord IPA
+        uses: vimtor/action-zip@v1.2
+        with:
+            files: Payload/
+            dest: discord-opensafari.ipa
+          
       - name: Download IPA icons
         run: |
           curl -L -o ipa-icons.zip https://raw.githubusercontent.com/pyoncord/assets/main/ipa-icons.zip
@@ -130,14 +141,14 @@ jobs:
 
       - name: Inject tweak - Normal Revenge
         run: |
-          cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i discord.ipa -o ${{ github.workspace }}/${{ env.APP_NAME }}.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} -usg
+          cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i discord-opensafari.ipa -o ${{ github.workspace }}/${{ env.APP_NAME }}.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} -usg
 
       - name: Download DiscordNoTrack
         run: wget https://github.com/asdfzxcvbn/DiscordNoTrack/releases/latest/download/DiscordNoTrack.dylib
 
       - name: Inject tweak - Revenge + DiscordNoTrack
         run: |
-          cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i discord.ipa -o ${{ github.workspace }}/${{ env.APP_NAME }}-discordnotrack.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} ${{ github.workspace }}/DiscordNoTrack.dylib -usg
+          cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i discord-opensafari.ipa -o ${{ github.workspace }}/${{ env.APP_NAME }}-discordnotrack.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} ${{ github.workspace }}/DiscordNoTrack.dylib -usg
 
       - name: Upload ipa as artifact
         uses: actions/upload-artifact@v4
