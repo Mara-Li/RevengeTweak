@@ -40,6 +40,11 @@
 
 Tweak to inject [Revenge](https://github.com/revenge-mod/Revenge) into Discord. Forked [BunnyTweak](https://github.com/pyoncord/BunnyTweak), modified to match with [RevengeXposed](https://github.com/revenge-mod/Revenge-xposed) behavior. There are still slight differences between these two, and this tweak may be missing some loader features.
 
+# Notice
+This branch will be used for my custom builds of revenge, they include:
+- Normal Revenge ipa updated to latest discord version
+- Revenge + [DiscordNoTrack](https://github.com/asdfzxcvbn/DiscordNoTrack)
+
 > [!NOTE]
 > As of right now this tweak does not encompass some functionalities when running in a jailed environment with a wildcard certificate \
 > If you value these features sign the application with a local dev certificate:

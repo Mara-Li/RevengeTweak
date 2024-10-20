@@ -1,6 +1,6 @@
 {
-  "name": "Revenge App Repo",
-  "identifier": "io.github.revenge-mod.repo",
+  "name": "Unofficial Revenge App Repo",
+  "identifier": "io.github.revenge-mod-cristiandis.repo",
   "iconURL": "https://avatars.githubusercontent.com/u/159218871?s=200&v=4",
   "apps": [
     {
@@ -13,22 +13,28 @@
       "tintColor": "7289da",
       "versions": [
         {
-          "version": "250.0",
-          "date": "2024-10-17",
-          "size": 101218840,
-          "downloadURL": "https://github.com/revenge-mod/revenge-tweak/releases/download/v250.0/Revenge.ipa"
+          "version": "249.0",
+          "date": "2024-10-02",
+          "size": 94736052,
+          "downloadURL": "https://github.com/Cristiandis/RevengeTweak/releases/download/v249.0/Revenge.ipa"
         },
         {
-          "version": "246.0",
-          "date": "2024-09-15",
-          "size": 102811465,
-          "downloadURL": "https://github.com/revenge-mod/RevengeTweak/releases/download/v246.0/Revenge.ipa"
+          "version": "248.0",
+          "date": "2024-09-24",
+          "size": 95010245,
+          "downloadURL": "https://github.com/Cristiandis/RevengeTweak/releases/download/v248.0/Revenge.ipa"
         },
         {
-          "version": "246.0",
-          "date": "2024-09-14",
-          "size": 103194076,
-          "downloadURL": "https://github.com/revenge-mod/RevengeTweak/releases/download/v246.0/Revenge.ipa"
+          "version": "247.2",
+          "date": "2024-09-22",
+          "size": 96632680,
+          "downloadURL": "https://github.com/Cristiandis/RevengeTweak/releases/download/v247.2/Revenge.ipa"
+        },
+        {
+          "version": "247.0",
+          "date": "2024-09-18",
+          "size": 96628469,
+          "downloadURL": "https://github.com/Cristiandis/RevengeTweak/releases/download/v247.0/Revenge.ipa"
         }
       ],
       "appPermissions": {}

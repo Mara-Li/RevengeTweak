@@ -1,0 +1,50 @@
+{
+  "name": "Revenge NoTracking App Repo",
+  "identifier": "io.github.revenge-mod-cristiandis.repo",
+  "iconURL": "https://cdn.discordapp.com/attachments/1205207690352005243/1284228073415249950/icon-altstore.png?ex=66e5de18&is=66e48c98&hm=737f59f228f7d887881fff1fcb6d8b08258b91c3c0d4df8501dfc499b51d870d&",
+  "apps": [
+    {
+      "name": "Revenge + DiscordNoTrack",
+      "bundleIdentifier": "com.hammerandchisel.discord",
+      "developerName": "Cristiandis",
+      "iconURL": "https://cdn.discordapp.com/attachments/1205207690352005243/1284228073415249950/icon-altstore.png?ex=66e5de18&is=66e48c98&hm=737f59f228f7d887881fff1fcb6d8b08258b91c3c0d4df8501dfc499b51d870d&",
+      "localizedDescription": "A client mod for Discord",
+      "subtitle": "A client mod for Discord",
+      "tintColor": "7289da",
+      "versions": [
+        {
+          "version": "250.0",
+          "date": "2024-10-14",
+          "size": 94741423,
+          "downloadURL": "https://github.com/Cristiandis/RevengeTweak/releases/download/v250.0/Revenge-discordnotrack.ipa"
+        },
+        {
+          "version": "249.0",
+          "date": "2024-10-02",
+          "size": 94741527,
+          "downloadURL": "https://github.com/Cristiandis/RevengeTweak/releases/download/v249.0/Revenge-discordnotrack.ipa"
+        },
+        {
+          "version": "248.0",
+          "date": "2024-09-24",
+          "size": 95015614,
+          "downloadURL": "https://github.com/Cristiandis/RevengeTweak/releases/download/v248.0/Revenge-discordnotrack.ipa"
+        },
+        {
+          "version": "247.2",
+          "date": "2024-09-22",
+          "size": 96637799,
+          "downloadURL": "https://github.com/Cristiandis/RevengeTweak/releases/download/v247.2/Revenge-discordnotrack.ipa"
+        },
+        {
+          "version": "247.0",
+          "date": "2024-09-18",
+          "size": 96633678,
+          "downloadURL": "https://github.com/Cristiandis/RevengeTweak/releases/download/v247.0/Revenge-discordnotrack.ipa"
+        }
+      ],
+      "appPermissions": {}
+    }
+  ],
+  "news": []
+}
