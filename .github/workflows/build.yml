@@ -108,7 +108,17 @@ jobs:
       - name: Download Discord IPA
         run: |
           curl -L -o discord.ipa ${{ github.event.inputs.ipa_url }}
+          
+      - name: Download OpenInDiscord
+        run: |
+          wget https://raw.githubusercontent.com/daisuke1227/RevengeUpdates/refs/heads/main/OpenDiscordSafariExtension.zip
+          unzip -q OpenDiscordSafariExtension.zip
 
+      - name: Add OpenInDiscord
+        run: |
+          unzip -q discord.ipa
+          cp -r OpenDiscordSafariExtension.appex Payload/Discord.app/Plugins/
+          
       - name: Download IPA icons
         run: |
           curl -L -o ipa-icons.zip https://raw.githubusercontent.com/pyoncord/assets/main/ipa-icons.zip
@@ -121,6 +131,8 @@ jobs:
           VERSION=$(grep '^Version:' control | cut -d ' ' -f 2)
           DEB_FILE_NAME="${PACKAGE}_${VERSION}_iphoneos-arm.deb"
           echo "DEB_FILE_NAME=$DEB_FILE_NAME" >> $GITHUB_ENV
+          ROOTLESS_DEB_FILE_NAME="${PACKAGE}_${VERSION}_iphoneos-arm64.deb"
+          echo "ROOTLESS_DEB_FILE_NAME=$ROOTLESS_DEB_FILE_NAME" >> $GITHUB_ENV
           echo "APP_NAME=$NAME" >> $GITHUB_ENV
 
       - name: Install cyan
@@ -128,14 +140,14 @@ jobs:
 
       - name: Inject tweak - Normal Revenge
         run: |
-          cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i discord.ipa -o ${{ github.workspace }}/${{ env.APP_NAME }}.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} -usg
+          cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i Payload/Discord.app -o ${{ github.workspace }}/${{ env.APP_NAME }}.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} -usg
 
       - name: Download DiscordNoTrack
         run: wget https://github.com/asdfzxcvbn/DiscordNoTrack/releases/latest/download/DiscordNoTrack.dylib
 
       - name: Inject tweak - Revenge + DiscordNoTrack
         run: |
-          cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i discord.ipa -o ${{ github.workspace }}/${{ env.APP_NAME }}-discordnotrack.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} ${{ github.workspace }}/DiscordNoTrack.dylib -usg
+          cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i Payload/Discord.app -o ${{ github.workspace }}/${{ env.APP_NAME }}-discordnotrack.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} ${{ github.workspace }}/DiscordNoTrack.dylib -usg
 
       - name: Upload ipa as artifact
         uses: actions/upload-artifact@v4
