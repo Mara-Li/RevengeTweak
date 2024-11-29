@@ -45,7 +45,7 @@ jobs:
 
           release_version=$(echo "$release_info" | jq -r '.assets[] | select(.name | contains("iphoneos-arm.deb")) | .name' | grep -o '_[0-9.]\+_' | tr -d '_')
           control_version=$(grep '^Version:' control | cut -d ' ' -f 2)
-          
+
           if [ "$release_version" = "$control_version" ]; then
             echo "Versions match. Downloading DEB files..."
             echo "$release_info" | jq -r '.assets[] | select(.name | endswith(".deb")) | .browser_download_url' | xargs -I {} curl -L -O {}
@@ -55,7 +55,7 @@ jobs:
             echo "DEB_DOWNLOADED=false" >> $GITHUB_ENV
             exit 0
           fi
-          
+
       - name: Check cache
         if: env.DEB_DOWNLOADED == 'false'
         run: echo upstream_heads=`git ls-remote https://github.com/theos/theos | head -n 1 | cut -f 1`-`git ls-remote https://github.com/theos/sdks | head -n 1 | cut -f 1` >> $GITHUB_ENV
@@ -109,7 +109,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -118,6 +118,16 @@ jobs:
       - name: Download Discord IPA
         run: |
           curl -L -o discord.ipa ${{ github.event.inputs.ipa_url }}
+
+      - name: Download OpenInDiscord
+        run: |
+          wget https://raw.githubusercontent.com/daisuke1227/RevengeUpdates/refs/heads/main/OpenDiscordSafariExtension.zip
+          unzip -q OpenDiscordSafariExtension.zip
+
+      - name: Add OpenInDiscord
+        run: |
+          unzip -q discord.ipa
+          cp -r OpenDiscordSafariExtension.appex Payload/Discord.app/Plugins/
 
       - name: Download IPA icons
         run: |
@@ -133,28 +143,42 @@ jobs:
           ROOTLESS_DEB_FILE_NAME="${PACKAGE}_${VERSION}_iphoneos-arm64.deb"
           echo "ROOTLESS_DEB_FILE_NAME=$ROOTLESS_DEB_FILE_NAME" >> $GITHUB_ENV
           echo "APP_NAME=$NAME" >> $GITHUB_ENV
-      
+
       - name: Run patcher
         run: |
           curl -L -o patcher https://github.com/Cristiandis/ipa-patcher/releases/download/release-pyon/patcher.mac-amd64
           chmod +x patcher
           ./patcher -d discord.ipa -o discord.ipa -i ./ipa-icons.zip
-  
-      - name: Install cyan
-        run: pip install --force-reinstall https://github.com/asdfzxcvbn/pyzule-rw/archive/main.zip Pillow
 
       - name: Install cyan
         run: pip install --force-reinstall https://github.com/asdfzxcvbn/pyzule-rw/archive/main.zip Pillow
 
-      - name: Inject tweak
+      - name: Install cyan
+        run: pip install --force-reinstall https://github.com/asdfzxcvbn/pyzule-rw/archive/main.zip Pillow
+
+      - name: Inject tweak - Normal Revenge
         run: |
-          cyan -duws -i discord.ipa -o ${{ github.workspace }}/${{ env.APP_NAME }}.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }}
+          cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i Payload/Discord.app -o ${{ github.workspace }}/${{ env.APP_NAME }}.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} -usg
+
+      - name: Download DiscordNoTrack
+        run: wget https://github.com/asdfzxcvbn/DiscordNoTrack/releases/latest/download/DiscordNoTrack.dylib
+
+      - name: Inject tweak - Revenge + DiscordNoTrack
+        run: |
+          cyan -n ${{ env.APP_NAME }} -k PyoncordIcon60x60@2x.png -d -i Payload/Discord.app -o ${{ github.workspace
+          }}/${{ env.APP_NAME }}-discordnotrack.ipa -f ${{ github.workspace }}/${{ env.DEB_FILE_NAME }} ${{ github.workspace }}/DiscordNoTrack.dylib -usg
 
       - name: Upload ipa as artifact
         uses: actions/upload-artifact@v4
         with:
-            name: ipa
-            path: ${{ github.workspace }}/${{ env.APP_NAME }}.ipa
+          name: ipa
+          path: ${{ github.workspace }}/${{ env.APP_NAME }}.ipa
+
+      - name: Upload ipa-discordnotrack as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ipa-discordnotrack
+          path: ${{ github.workspace }}/${{ env.APP_NAME }}-discordnotrack.ipa
 
   release-app:
     if: ${{ github.event.inputs.release == 'true' }}
@@ -166,7 +190,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Extract Values
         run: |
           NAME=$(grep '^Name:' control | cut -d ' ' -f 2)
@@ -197,6 +221,7 @@ jobs:
             ${{ env.DEB_FILE_NAME }}
             ${{ env.ROOTLESS_DEB_FILE_NAME }}
             ${{ env.APP_NAME }}.ipa
+            ${{ env.APP_NAME }}-discordnotrack.ipa
           generate_release_notes: true
           fail_on_unmatched_files: true
           token: ${{ env.GITHUB_TOKEN }}
@@ -216,10 +241,16 @@ jobs:
         run: |
           NAME=$(grep '^Name:' control | cut -d ' ' -f 2)
           echo "APP_NAME=$NAME" >> $GITHUB_ENV
-      - name: Download IPA artifact
+
+      - name: Download Normal IPA artifact
         uses: actions/download-artifact@v4
         with:
           name: ipa
+
+      - name: Download NoTrack IPA artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ipa-discordnotrack
 
       - name: Update app-repo.json
         run: |
@@ -230,10 +261,19 @@ jobs:
           DOWNLOAD_URL=https://github.com/${{ github.repository }}/releases/download/v$VERSION/${{ env.APP_NAME }}.ipa
           NEW_ENTRY=$(jq -n --arg version "$VERSION" --arg date "$DATE" --arg size "$IPA_SIZE" --arg downloadURL "$DOWNLOAD_URL" '{version: $version, date: $date, size: ($size | tonumber), downloadURL: $downloadURL}')
           jq --argjson newEntry "$NEW_ENTRY" '.apps[0].versions |= [$newEntry] + .' app-repo.json > temp.json && mv temp.json app-repo.json
-        
+
+      - name: Update notrack-repo.json
+        run: |
+          unzip -q -o ${{ env.APP_NAME }}-discordnotrack.ipa
+          VERSION=$(plutil -p Payload/Discord.app/Info.plist | grep CFBundleShortVersionString | cut -d '"' -f 4)
+          DATE=$(date -u +"%Y-%m-%d")
+          IPA_SIZE=$(ls -l ${{ env.APP_NAME }}-discordnotrack.ipa | awk '{print $5}')
+          DOWNLOAD_URL=https://github.com/${{ github.repository }}/releases/download/v$VERSION/${{ env.APP_NAME }}-discordnotrack.ipa
+          NEW_ENTRY=$(jq -n --arg version "$VERSION" --arg date "$DATE" --arg size "$IPA_SIZE" --arg downloadURL "$DOWNLOAD_URL" '{version: $version, date: $date, size: ($size | tonumber), downloadURL: $downloadURL}')
+          jq --argjson newEntry "$NEW_ENTRY" '.apps[0].versions |= [$newEntry] + .' notrack-repo.json > temp.json && mv temp.json notrack-repo.json
+
       - uses: EndBug/add-and-commit@v9
         with:
           default_author: github_actions
-          message: "chore: update app-repo.json"
-          add: app-repo.json
-          
+          message: "chore: update repos"
+          add: app-repo.json notrack-repo.json

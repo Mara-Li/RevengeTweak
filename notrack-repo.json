@@ -1,0 +1,62 @@
+{
+  "name": "Revenge NoTracking App Repo",
+  "identifier": "io.github.revenge-mod-cristiandis.repo",
+  "iconURL": "https://avatars.githubusercontent.com/u/159218871?s=200&v=4",
+  "apps": [
+    {
+      "name": "Revenge + DiscordNoTrack",
+      "bundleIdentifier": "com.hammerandchisel.discord",
+      "developerName": "Cristiandis",
+      "iconURL": "https://avatars.githubusercontent.com/u/159218871?s=200&v=4",
+      "localizedDescription": "A client mod for Discord",
+      "subtitle": "A client mod for Discord",
+      "tintColor": "7289da",
+      "versions": [
+        {
+          "version": "252.0",
+          "date": "2024-10-23",
+          "size": 101662361,
+          "downloadURL": "https://github.com/Cristiandis/RevengeTweak/releases/download/v252.0/Revenge-discordnotrack.ipa"
+        },
+        {
+          "version": "251.0",
+          "date": "2024-10-20",
+          "size": 94637796,
+          "downloadURL": "https://github.com/Cristiandis/RevengeTweak/releases/download/v251.0/Revenge-discordnotrack.ipa"
+        },
+        {
+          "version": "250.0",
+          "date": "2024-10-14",
+          "size": 94741423,
+          "downloadURL": "https://github.com/Cristiandis/RevengeTweak/releases/download/v250.0/Revenge-discordnotrack.ipa"
+        },
+        {
+          "version": "249.0",
+          "date": "2024-10-02",
+          "size": 94741527,
+          "downloadURL": "https://github.com/Cristiandis/RevengeTweak/releases/download/v249.0/Revenge-discordnotrack.ipa"
+        },
+        {
+          "version": "248.0",
+          "date": "2024-09-24",
+          "size": 95015614,
+          "downloadURL": "https://github.com/Cristiandis/RevengeTweak/releases/download/v248.0/Revenge-discordnotrack.ipa"
+        },
+        {
+          "version": "247.2",
+          "date": "2024-09-22",
+          "size": 96637799,
+          "downloadURL": "https://github.com/Cristiandis/RevengeTweak/releases/download/v247.2/Revenge-discordnotrack.ipa"
+        },
+        {
+          "version": "247.0",
+          "date": "2024-09-18",
+          "size": 96633678,
+          "downloadURL": "https://github.com/Cristiandis/RevengeTweak/releases/download/v247.0/Revenge-discordnotrack.ipa"
+        }
+      ],
+      "appPermissions": {}
+    }
+  ],
+  "news": []
+}
